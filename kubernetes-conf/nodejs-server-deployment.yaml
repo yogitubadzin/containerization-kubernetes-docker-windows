@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-server-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: nodejs-server
+  template:
+    metadata:
+      labels:
+        component: nodejs-server
+    spec:
+      containers:
+        - name: nodejs-server
+          image: yogitubadzin/multi-server
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: '6379'
+            - name: POSTGRESS_USER
+              value: postgres
+            - name: POSTGRESS_HOST
+              value: postgres-cluster-ip-service
+            - name: POSTGRESS_PORT
+              value: '5432'
+            - name: POSTGRESS_DATABASE
+              value: postgres
+            - name: POSTGRESS_PASSWORD
+              value: postgres_password
