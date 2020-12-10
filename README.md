@@ -76,4 +76,5 @@ $ minikube tunnel
 $ kubectl get services balanced
 NAME       TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 balanced   LoadBalancer   10.103.241.114   127.0.0.1     8080:32711/TCP   3m8s
+
 ----------------------------------
