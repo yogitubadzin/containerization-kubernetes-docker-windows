@@ -1,0 +1,251 @@
+Push images to docker repository
+
+$ docker container ls
+CONTAINER ID        IMAGE                                 COMMAND                  CREATED             STATUS                          PORTS
+                                                               NAMES
+1312c0ad44dd        gcr.io/k8s-minikube/kicbase:v0.0.14   "/usr/local/bin/entr…"   12 minutes ago      Up 12 minutes                   127.0.0.1:32775->22/tcp, 127.0.0.1:32774->2376/tcp, 127.0.0.1:32773->5000/tcp, 127.0.0.1:32772->8443/tcp   minikube
+e2c1bef826c8        multi-docker_nginx                    "/docker-entrypoint.…"   28 hours ago        Restarting (1) 59 seconds ago
+                                                               multi-docker_nginx_1
+2f8618eaf1b5        multi-docker_api                      "docker-entrypoint.s…"   28 hours ago        Up 17 seconds
+                                                               multi-docker_api_1
+fce9f659d6a6        multi-docker_client                   "/docker-entrypoint.…"   28 hours ago        Up 19 seconds                   80/tcp, 3000/tcp
+                                                               multi-docker_client_1
+fd5fb79f4f71        multi-docker_worker                   "docker-entrypoint.s…"   28 hours ago        Up 19 seconds
+                                                               multi-docker_worker_1
+0186e231e705        redis:latest                          "docker-entrypoint.s…"   44 hours ago        Up 19 seconds                   6379/tcp
+                                                               multi-docker_redis_1
+f3a1577e705b        postgres:latest                       "docker-entrypoint.s…"   44 hours ago        Up 17 seconds                   5432/tcp
+                                                               multi-docker_POSTGRESS_1
+
+
+
+$ docker commit fd5fb79f4f71 yogitubadzin/multi-worker-service
+sha256:4f95c95552806353f8180963053e4d905d8849fb3c0150ff189e3432a5773c97
+
+
+$ docker push yogitubadzin/multi-worker-service
+The push refers to repository [docker.io/yogitubadzin/multi-worker-service]
+f0fb46fd48ab: Preparing
+30596503cb2f: Preparing
+bc77ac975be8: Preparing
+bc7e82847084: Preparing
+19f18d2c9547: Preparing
+0c14b558e607: Preparing
+b916aec201e0: Preparing
+11f967d5e0a5: Preparing
+3e207b409db3: Preparing
+0c14b558e607: Waiting
+b916aec201e0: Waiting
+11f967d5e0a5: Waiting
+3e207b409db3: Waiting
+bc7e82847084: Pushed
+30596503cb2f: Pushed
+f0fb46fd48ab: Pushed
+19f18d2c9547: Pushed
+0c14b558e607: Mounted from library/node
+b916aec201e0: Mounted from library/node
+bc77ac975be8: Pushed
+        a11f967d5e0a5: Mounted from library/node
+3e207b409db3: Mounted from library/node
+latest: digest: sha256:3d94bc7e6b543c98bdf65e518cc11a47f716ee196503aa8b2536ad2336a6ac39 size: 2198
+
+$ docker commit fce9f659d6a6 yogitubadzin/multi-react-client
+sha256:13a0e5342c3b71e6e0b69eec7530f97d50d6955e94da979dd75d9cca8c8c532f
+
+$ docker push yogitubadzin/multi-react-client
+The push refers to repository [docker.io/yogitubadzin/multi-react-client]
+d80ac8ebc45f: Preparing
+a32824be952f: Preparing
+56e53897542e: Preparing
+7e914612e366: Preparing
+f790aed835ee: Preparing
+850c2400ea4d: Preparing
+7ccabd267c9f: Preparing
+f5600c6330da: Preparing
+850c2400ea4d: Waiting
+f5600c6330da: Waiting
+f790aed835ee: Mounted from library/nginx
+7e914612e366: Mounted from library/nginx
+850c2400ea4d: Mounted from library/nginx
+d80ac8ebc45f: Pushed
+56e53897542e: Pushed
+7ccabd267c9f: Mounted from library/nginx
+a32824be952f: Pushed
+f5600c6330da: Mounted from library/redis
+latest: digest: sha256:a34fb8fccefd53466f87107d89d6e4ce32e2a08c56b787cdb22cef3565744df8 size: 1987
+
+$ docker commit 2f8618eaf1b5 yogitubadzin/nodejs-multi-server
+sha256:7a44389d7aece12df53e97f23fb43211941a68520d88f0c085a2a37c14231511
+
+$ docker push yogitubadzin/nodejs-multi-server
+The push refers to repository [docker.io/yogitubadzin/nodejs-multi-server]
+6246a1127aed: Preparing
+91ec8d1ac3f4: Preparing
+2b2d788bcb09: Preparing
+3904ffd8b42a: Preparing
+19f18d2c9547: Preparing
+0c14b558e607: Preparing
+b916aec201e0: Preparing
+11f967d5e0a5: Preparing
+3e207b409db3: Preparing
+0c14b558e607: Waiting
+b916aec201e0: Waiting
+11f967d5e0a5: Waiting
+3e207b409db3: Waiting
+19f18d2c9547: Mounted from yogitubadzin/multi-worker-service
+6246a1127aed: Pushed
+0c14b558e607: Mounted from yogitubadzin/multi-worker-service
+3904ffd8b42a: Pushed
+91ec8d1ac3f4: Pushed
+11f967d5e0a5: Mounted from yogitubadzin/multi-worker-service
+b916aec201e0: Mounted from yogitubadzin/multi-worker-service
+3e207b409db3: Mounted from yogitubadzin/multi-worker-service
+2b2d788bcb09: Pushed
+
+latest: digest: sha256:92b816ac0840178c31c277f07f265c4f3fd0756ed28184976ecddddbc28f5901 size: 2198
+
+------------------------------------------
+Kubernetes
+1.Create folder, i.e.: "d:\kubernetes".
+2.Install kubernetes from following link:
+  https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows
+-If you have git installed, you can find curl here: 
+ "C:\Program Files\Git\mingw64\bin\curl.exe"
+-To run curl from the command line
+a) Right-hand-click on "My Computer" icon
+b) Select Properties
+c) Click 'Advanced system settings' link
+d) Go to tab [Advanced] - 'Environment Variables' button
+e) Under System variable select 'Path' and Edit button
+f) Add a semicolon followed by the path to where you placed your curl.exe (e.g. ;D:\software\curl),
+   in our case "C:\Program Files\Git\mingw64\bin\curl.exe"
+-another option is to install kubertness via choco:
+ "choco install kubernetes-cli"
+
+Please remember about creatig config in .kube directory.
+3.Install minikube
+a)-choco install minikube
+b)
+-minikube start 
+OR
+-minikube start --driver=docker
+OR
+-minikube config set driver docker
+
+Now, run any kubectl command, if you have the deployment yaml file then,...
+-kubectl apply -f <file path with name>
+4.Run command:
+-kubectl apply -f kubernetes-conf
+5.You can open kubernetes dashboard in web browser by command:
+-minikube dashboard
+On my local machine is under dashboard:
+-http://127.0.0.1:64098/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/overview?namespace=default
+6.Commands:
+a)$ kubectl get po -A
+NAMESPACE              NAME                                         READY   STATUS             RESTARTS   AGE
+default                client-react-deployment-79df79769b-4pjsx     0/1     ImagePullBackOff   0          4m31s
+default                client-react-deployment-79df79769b-p7hsr     0/1     ImagePullBackOff   0          4m31s
+default                client-react-deployment-79df79769b-wsxf5     0/1     ImagePullBackOff   0          4m31s
+default                nodejs-server-deployment-86cd544669-4vtd8    0/1     ImagePullBackOff   0          4m31s
+default                nodejs-server-deployment-86cd544669-7xknn    0/1     ImagePullBackOff   0          4m31s
+default                nodejs-server-deployment-86cd544669-t5qdp    0/1     ImagePullBackOff   0          4m31s
+default                postgres-deployment-7476bc47bd-85jzv         0/1     CrashLoopBackOff   5          4m31s
+default                redis-deployment-58c4799ccc-hfv7k            1/1     Running            0          4m30s
+default                worker-service-deployment-8487d8b97f-2kcs5   0/1     ImagePullBackOff   0          4m30s
+kube-system            coredns-f9fd979d6-tnk9j                      1/1     Running            0          6m47s
+kube-system            etcd-minikube                                1/1     Running            0          6m51s
+kube-system            kube-apiserver-minikube                      1/1     Running            0          6m51s
+kube-system            kube-controller-manager-minikube             1/1     Running            0          6m51s
+kube-system            kube-proxy-fdm62                             1/1     Running            0          6m47s
+kube-system            kube-scheduler-minikube                      1/1     Running            0          6m50s
+kube-system            storage-provisioner                          1/1     Running            1          6m45s
+kubernetes-dashboard   dashboard-metrics-scraper-c95fcf479-blp2r    1/1     Running            0          3m16s
+kubernetes-dashboard   kubernetes-dashboard-584f46694c-qwrzx        1/1     Running            0          3m16s
+
+b)Deploy on port 8080:
+$ kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+deployment.apps/hello-minikube created
+
+$ kubectl expose deployment hello-minikube --type=NodePort --port=8080
+service/hello-minikube exposed
+
+$ kubectl get services hello-minikube
+NAME             TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+hello-minikube   NodePort   10.102.166.133   <none>        8080:31040/TCP   60s
+
+c)Deploy on Load Balancer:
+$ kubectl create deployment balanced --image=k8s.gcr.io/echoserver:1.4
+deployment.apps/balanced created
+
+$ kubectl expose deployment balanced --type=LoadBalancer --port=8080
+service/balanced exposed
+
+In other command window:
+$ minikube tunnel
+* Starting tunnel for service balanced.
+
+$ kubectl get services balanced
+NAME       TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+balanced   LoadBalancer   10.103.241.114   127.0.0.1     8080:32711/TCP   3m8s
+
+
+$ kubectl get pods
+NAME                                         READY   STATUS             RESTARTS   AGE
+balanced-5744b548b4-pwxmf                    0/1     ImagePullBackOff   0          27h
+client-react-deployment-79df79769b-4pjsx     1/1     Running            1          27h
+client-react-deployment-79df79769b-p7hsr     1/1     Running            1          27h
+client-react-deployment-79df79769b-wsxf5     1/1     Running            1          27h
+hello-minikube-6ddfcc9757-mghlq              0/1     ImagePullBackOff   0          27h
+nodejs-server-deployment-86cd544669-4vtd8    0/1     ImagePullBackOff   0          27h
+nodejs-server-deployment-86cd544669-7xknn    0/1     ImagePullBackOff   0          27h
+nodejs-server-deployment-86cd544669-t5qdp    0/1     ImagePullBackOff   0          27h
+postgres-deployment-7476bc47bd-85jzv         0/1     CrashLoopBackOff   202        27h
+redis-deployment-58c4799ccc-hfv7k            1/1     Running            2          27h
+worker-service-deployment-8487d8b97f-2kcs5   1/1     Running            1          27h
+
+
+$kubectl describe pod nodejs-server-deployment-86cd544669-4vtd8
+
+verify if postgres-deployment.yaml file has access to correct path under volumeMounts section
+
+$ kubectl apply -f kubernetes-conf/postgres-deployment.yaml
+deployment.apps/postgres-deployment configured
+
+$ kubectl logs postgres-deployment-5d54b78877-wnbxc
+Error: Database is uninitialized and superuser password is not specified.
+       You must specify POSTGRESS_PASSWORD to a non-empty value for the
+       superuser. For example, "-e POSTGRESS_PASSWORD=password" on "docker run".
+
+       You may also use "POSTGRESS_HOST_AUTH_METHOD=trust" to allow all
+       connections without a password. This is *not* recommended.
+
+       See PostgreSQL documentation about "trust":
+       https://www.postgresql.org/docs/current/auth-trust.html
+
+
+If kubectl get pods shows that your pod status is ImagePullBackOff or ErrImagePull, this means that the pod could not run because it could not pull the image.
+Check that the image name is correct and try pulling the image manually on the host using docker pull. 
+$ docker pull redis
+$ docker pull postgres
+$ docker pull yogitubadzin/nodejs-multi-server
+$ docker pull yogitubadzin/multi-react-client
+$ docker pull yogitubadzin/multi-worker-service
+
+
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/cloud/deploy.yaml
+$ minikube addons enable ingress
+$ minikube start --vm=true
+
+$ minikube ip
+127.0.0.1
+
+$ minikube tunnel
+* Starting tunnel for service balanced.
+! The service ingress-nginx-controller requires privileged ports to be exposed: [80 443]
+* sudo permission will be asked for it.
+* Starting tunnel for service ingress-nginx-controller.
+E1211 22:36:51.202955   11308 ssh_tunnel.go:113] error starting ssh tunnel: exec: "sudo": executable file not found in %PATH%
+
+Open issue:
+https://github.com/kubernetes/minikube/issues/9078
+----------------------------------

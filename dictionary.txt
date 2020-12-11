@@ -9,19 +9,19 @@ Dictionary:
 -namespace - An entity that groups all objects / resources / controllers under one name / group. For example, namespace can be used to manage the dev, test and prod environments. By default, everything is created in the default namespace.
 -ClusterIP - They provide the service internally - and only the cluster can contact it.
 -LoadBalancer - Provides our service externally using a load balancer provided by a given cloud provider (azure, aws, google, etc.)
--ReplicationController - Old model for building and deploying solutions on kubernetes. It is now being discontinued and replaced with ReplicaSet.
 -proxy - Containers created and managed by the Docker platform, are able to provide the service that is running inside the container, not only to other co-located containers, but also to remote hosts. Docker achieves this with port forwarding.
 
 2. Object/Resource.
--object/resource - Type (NodePort, ReplicaSet, Ingress, Deployment, Service, Pod).
+-object/resource - Type (NodePort, ReplicaSet, Ingress, Deployment, Service, Pod, ReplicationController).
 
 Object/resource types:
 a)NodePort - It makes available the port of a given service (more precisely, of all nodes under a given service). Having such a static port, we can connect to it later or even share the connection by mapping.
 b)ReplicaSet - ReplicaSet makes sure that the given state of our solution is as described - whether we have the right number of pods. A master which uses ReplicaSet and gives more possibilities is deploymnet.
 c)Ingress - By doing as a proxy for our services, deployments. It allows us to connect many elements of our kubernetes solution under one IP address. Thanks to which we officially have one IP address and we use several or even a dozen deployments.
 d)Deployment - It gives the possibility to create declarative updates of our Pods. What does it mean? And only that having such a document, we can create container templates to be created and how many instances of them should be and how they are to be created, updated, etc. and kubernetes will take care of it. The upside is the ability to roll back changes. Underneath, deployment uses ReplicaSet. The goal of deployment is to replace ReplicationController.
-e)service - A being that groups many podiums into a logical whole. For example, one pod has to contact the other, thanks to the Service it is possible. In addition, the Service allows you to expose a given container to the outside world - that is, assign, for example, a public IP address. The service includes types such as ClusterIP, LoadBalancer or NodePort.
-f)pod - The smallest unit in kubernetes. It is responsible for declaring containers to be fired on the same host / node. Generally, when someone talks about Pod, they mean at least one working container. Although Pods are the most important objects and highest in the hierarchy, they are subject to some structure. Each cluster can have ~ 5000 nodes, all nodes cannot have more than 150,000 pods. And these pods cannot have more than 300,000 containers. There is also a restriction that no more than 100 pods per node.
+e)Service - A being that groups many podiums into a logical whole. For example, one pod has to contact the other, thanks to the Service it is possible. In addition, the Service allows you to expose a given container to the outside world - that is, assign, for example, a public IP address. The service includes types such as ClusterIP, LoadBalancer or NodePort.
+f)Pod - The smallest unit in kubernetes. It is responsible for declaring containers to be fired on the same host / node. Generally, when someone talks about Pod, they mean at least one working container. Although Pods are the most important objects and highest in the hierarchy, they are subject to some structure. Each cluster can have ~ 5000 nodes, all nodes cannot have more than 150,000 pods. And these pods cannot have more than 300,000 containers. There is also a restriction that no more than 100 pods per node.
+g)ReplicationController - Old model for building and deploying solutions on kubernetes. It is now being discontinued and replaced with ReplicaSet.
 
 3.Master Node.
 -Master Node - Node consisting of three services: a)API (apiserver), b)manage controllers (controller-manager) and c)scheduler.

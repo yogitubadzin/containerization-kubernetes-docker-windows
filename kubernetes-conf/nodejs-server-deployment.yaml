@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nodejs-server
-          image: yogitubadzin/multi-server
+          image: yogitubadzin/nodejs-multi-server
           ports:
             - containerPort: 5000
           env:
@@ -31,4 +31,4 @@ spec:
             - name: POSTGRESS_DATABASE
               value: postgres
             - name: POSTGRESS_PASSWORD
-              value: postgres_password
+              value: 'postgres_password'
